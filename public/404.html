@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Page Not Found | MP4Tube.video</title>
+    <meta name="robots" content="noindex">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+    <style>
+        .notfound { padding: 120px 0 160px; text-align: center; }
+        .notfound .code {
+            font-size: clamp(80px, 14vw, 160px);
+            font-weight: 900;
+            line-height: 1;
+            color: var(--red, #ff1a1a);
+            letter-spacing: -0.04em;
+            margin-bottom: 16px;
+        }
+        .notfound h1 {
+            font-size: clamp(24px, 3vw, 36px);
+            font-weight: 800;
+            margin: 0 0 12px;
+        }
+        .notfound p {
+            color: var(--text-dim, #888);
+            font-size: 16px;
+            max-width: 480px;
+            margin: 0 auto 32px;
+            line-height: 1.55;
+        }
+        .notfound a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: var(--red, #ff1a1a);
+            color: #fff;
+            border-radius: 60px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: background 0.2s ease, transform 0.15s ease;
+            box-shadow: 0 4px 16px rgba(255, 26, 26, 0.35);
+        }
+        .notfound a:hover {
+            background: #c42020;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header" id="siteHeader">
+        <div class="container header-inner">
+            <a href="/" class="brand" aria-label="MP4Tube.video home">
+                <span class="brand-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M6 4l14 8-14 8V4z"/></svg>
+                </span>
+                <span class="brand-text">
+                    <span class="brand-mp4">MP4</span><span class="brand-tube">Tube</span><span class="brand-tld">.video</span>
+                </span>
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <section class="notfound">
+            <div class="container">
+                <div class="code">404</div>
+                <h1>Page not found</h1>
+                <p>The page you're looking for doesn't exist on this static deployment. Head back to the homepage to download YouTube videos.</p>
+                <a href="/">
+                    <svg viewBox="0 0 24 24" fill="none" width="20" height="20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                    Back to homepage
+                </a>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>

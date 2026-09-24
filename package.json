@@ -1,0 +1,15 @@
+{
+  "name": "mp4tube.video",
+  "version": "1.0.0",
+  "description": "YouTube video downloader",
+  "scripts": {
+    "dev": "node server/index.js",
+    "start": "node server/index.js",
+    "build:static": "node scripts/build-static.js",
+    "vercel-build": "node scripts/build-static.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+}

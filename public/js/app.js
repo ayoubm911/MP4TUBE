@@ -246,7 +246,7 @@ async function fetchVideoInfo(silent = false) {
             throw new Error(
                 response.ok
                     ? 'The download backend did not return a valid response. Make sure the backend server is running.'
-                    : 'The download backend is not reachable. Run locally with: npm start'
+                    : 'The download backend is not reachable. Set BACKEND_URL in Vercel env vars to your Render/Railway/Fly backend URL.'
             );
         }
 
@@ -267,7 +267,7 @@ async function fetchVideoInfo(silent = false) {
                 error instanceof TypeError && /Failed to fetch/i.test(error.message) ||
                 (typeof error.message === 'string' && /404|backend|reachable/i.test(error.message));
             const friendly = isStaticOnly
-                ? 'The download backend is not reachable. Run locally with: npm start'
+                ? 'The download backend is not reachable. Set BACKEND_URL in Vercel env vars to your Render/Railway/Fly backend URL.'
                 : (error.message || 'Failed to fetch video information. Please check the URL and try again.');
             showError(friendly);
             showToast('Error: ' + friendly, 'error');

@@ -6,11 +6,27 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+const { spawn } = require('child_process');
 const apiRoutes = require('./routes/api');
 
-// 创建 Express 应用实例
+// Create Express app instance
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Self-update yt-dlp on startup (non-blocking, ~2-5s).
+// YouTube changes their player weekly; a stale yt-dlp starts failing
+// with "Failed to extract any player response" within days.
+// Skipped on Windows so it doesn't fight the winget-installed binary.
+if (process.platform !== 'win32') {
+    console.log('[startup] Self-updating yt-dlp…');
+    const updater = spawn('yt-dlp', ['-U'], { stdio: 'inherit' });
+    updater.on('exit', (code) => {
+        console.log(`[startup] yt-dlp self-update exited with code ${code}`);
+    });
+    updater.on('error', (err) => {
+        console.warn('[startup] yt-dlp self-update failed:', err.message);
+    });
+}
 
 // 中间件配置
 app.use(cors());  // 允许跨域请求

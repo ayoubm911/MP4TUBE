@@ -199,13 +199,27 @@ function cleanupFile(filePath) {
     }
 }
 
+// Player-client fallbacks. YouTube fingerprints datacenter IPs (Render,
+// AWS, Vercel, etc.) and blocks the default `web` client aggressively.
+// Trying web → android → ios → tv_embedded in order gives the best chance
+// of getting a player response back from a cloud server.
+// On a residential IP any single client works, so the order is harmless there.
+const PLAYER_CLIENT_FALLBACKS = 'web,android,ios,tv_embedded';
+
 // ---------------------------------------------------------------------------
 // Public API: getVideoInfo
 // ---------------------------------------------------------------------------
 async function getVideoInfo(videoUrl) {
     console.log('[yt-dlp] Fetching metadata:', videoUrl);
     const { stdout } = await runYtDlp(
-        ['--no-warnings', '--no-playlist', '--dump-single-json', videoUrl],
+        [
+            '--no-warnings',
+            '--no-playlist',
+            '--no-check-certificates',
+            '--extractor-args', `youtube:player_client=${PLAYER_CLIENT_FALLBACKS}`,
+            '--dump-single-json',
+            videoUrl,
+        ],
         { timeoutMs: 90_000 }
     );
 
@@ -236,7 +250,14 @@ function pickBestThumbnail(thumbs) {
 // ---------------------------------------------------------------------------
 async function getAvailableFormats(videoUrl) {
     const { stdout } = await runYtDlp(
-        ['--no-warnings', '--no-playlist', '--dump-single-json', videoUrl],
+        [
+            '--no-warnings',
+            '--no-playlist',
+            '--no-check-certificates',
+            '--extractor-args', `youtube:player_client=${PLAYER_CLIENT_FALLBACKS}`,
+            '--dump-single-json',
+            videoUrl,
+        ],
         { timeoutMs: 90_000 }
     );
     const info = JSON.parse(stdout);
@@ -282,7 +303,15 @@ async function downloadVideo(videoUrl, options) {
     // yt-dlp will append the real extension automatically.
     const dlDir   = TEMP_DIR;
     const dlBase  = path.join(dlDir, `mp4tube_${dlId}`); // no extension — yt-dlp adds it
-    const dlArgs  = ['--no-warnings', '--no-playlist', '--no-part', '--no-mtime', '-o', dlBase];
+    const dlArgs  = [
+        '--no-warnings',
+        '--no-playlist',
+        '--no-part',
+        '--no-mtime',
+        '--no-check-certificates',
+        '--extractor-args', `youtube:player_client=${PLAYER_CLIENT_FALLBACKS}`,
+        '-o', dlBase,
+    ];
 
     if (audioOnly) {
         dlArgs.push('-x', '--audio-format', outputExt, '--audio-quality', mapAudioQuality(quality), '-f', 'bestaudio/best');

@@ -26,5 +26,7 @@ COPY . .
 # Expose the port Render expects
 EXPOSE 10000
 
-# Start the server
-CMD ["node", "server/index.js"]
+# Self-update yt-dlp on every container start, THEN launch the server.
+# Render keeps containers running for weeks — without this, the binary
+# baked in at build time goes stale and YouTube breaks it within days.
+CMD ["sh", "-c", "yt-dlp -U && node server/index.js"]
